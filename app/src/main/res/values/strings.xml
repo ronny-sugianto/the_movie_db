@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">The MovieDB</string>
+    <string name="overview_label">Overview</string>
+    <string name="trailer_label">Trailer</string>
+    <string name="review_label">Review</string>
+    <string name="movie_label">List of Movie</string>
+    <string name="error_message">Error While Fetch: %s</string>
+    <string name="youtube_url">https://www.youtube.com/watch?v=%s</string>
+    <string name="youtube_thumbnail">https://img.youtube.com/vi/%s/maxresdefault.jpg</string>
+</resources>

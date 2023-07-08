@@ -1,0 +1,92 @@
+
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+def localProperties = new Properties()
+def environmentPropertiesFile = rootProject.file('local.properties')
+if (environmentPropertiesFile.exists()) {
+    environmentPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(new FileInputStream(environmentPropertiesFile))
+    }
+}
+
+def API_END_POINT = localProperties.getProperty('app.api')
+if (API_END_POINT == null) {
+    API_END_POINT = 'https://api.themoviedb.org/3'
+}
+
+def API_ACCESS_TOKEN = localProperties.getProperty('app.apiAccessToken')
+if (API_ACCESS_TOKEN == null) {
+    API_ACCESS_TOKEN = '-'
+}
+
+def IMAGE_BASE_URL = localProperties.getProperty('app.imageBaseUrl')
+if (IMAGE_BASE_URL == null) {
+    IMAGE_BASE_URL = '-'
+}
+
+android {
+    namespace 'id.ronnysugianto.themoviedb'
+    compileSdk 34
+    defaultConfig {
+        applicationId "id.ronnysugianto.themoviedb"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+
+        buildConfigField "String", "API_END_POINT", API_END_POINT
+        buildConfigField "String", "API_ACCESS_TOKEN", API_ACCESS_TOKEN
+        buildConfigField "String", "IMAGE_BASE_URL", IMAGE_BASE_URL
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+        buildConfig true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:2.46.1"
+    kapt "com.google.dagger:dagger-compiler:2.46.1"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+}
